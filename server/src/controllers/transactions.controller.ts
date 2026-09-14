@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import { Transaction } from '../models/Transaction';
+import { buildTransactionFilter } from '../utils/filterBuilder';
 
 export const getAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
@@ -11,33 +12,12 @@ export const getAll = async (req: Request, res: Response, next: NextFunction): P
       page = '1', pageSize = '10',
     } = req.query as Record<string, string>;
 
-    // Build filter object
-    const filter: Record<string, unknown> = {};
-    if (category && category !== 'All') filter.category = category;
-    if (status && status !== 'All')   filter.status   = status;
-    if (user)   filter.user_id = { $regex: user, $options: 'i' };
-    if (dateFrom || dateTo) {
-      filter.date = {};
-      if (dateFrom) (filter.date as Record<string, Date>).$gte = new Date(dateFrom);
-      if (dateTo)   (filter.date as Record<string, Date>).$lte = new Date(dateTo + 'T23:59:59Z');
-    }
-    if (amountMin || amountMax) {
-      filter.amount = {};
-      if (amountMin) (filter.amount as Record<string, number>).$gte = parseFloat(amountMin);
-      if (amountMax) (filter.amount as Record<string, number>).$lte = parseFloat(amountMax);
-    }
-    if (search) {
-      filter.$or = [
-        { user_id: { $regex: search, $options: 'i' } },
-        { status:  { $regex: search, $options: 'i' } },
-        { category:{ $regex: search, $options: 'i' } },
-      ];
-    }
+    const filter = buildTransactionFilter({ search, category, status, user, dateFrom, dateTo, amountMin, amountMax });
 
-    const pageNum  = Math.max(1, parseInt(page, 10));
-    const limit    = Math.min(10000, Math.max(1, parseInt(pageSize, 10)));
-    const skip     = (pageNum - 1) * limit;
-    const sort     = { [sortField]: sortDir === 'asc' ? 1 : -1 } as Record<string, 1 | -1>;
+    const pageNum = Math.max(1, parseInt(page, 10));
+    const limit   = Math.min(10000, Math.max(1, parseInt(pageSize, 10)));
+    const skip    = (pageNum - 1) * limit;
+    const sort    = { [sortField]: sortDir === 'asc' ? 1 : -1 } as Record<string, 1 | -1>;
 
     const [data, total] = await Promise.all([
       Transaction.find(filter).sort(sort).skip(skip).limit(limit).lean(),

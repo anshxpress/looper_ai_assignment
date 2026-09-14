@@ -2,6 +2,7 @@ import type { Request, Response, NextFunction } from 'express';
 import { stringify } from 'csv-stringify';
 import { Transaction } from '../models/Transaction';
 import { format } from 'date-fns';
+import { buildTransactionFilter } from '../utils/filterBuilder';
 
 const ALL_COLUMNS = ['id', 'date', 'user_id', 'category', 'status', 'amount', 'user_profile'];
 
@@ -12,12 +13,7 @@ export const exportCsv = async (req: Request, res: Response, next: NextFunction)
       filters: Record<string, string>;
     };
 
-    // Build filter (reuse same logic as transactions.controller)
-    const filter: Record<string, unknown> = {};
-    if (filters.category && filters.category !== 'All') filter.category = filters.category;
-    if (filters.status   && filters.status   !== 'All') filter.status   = filters.status;
-    if (filters.user)   filter.user_id = { $regex: filters.user, $options: 'i' };
-
+    const filter = buildTransactionFilter(filters);
     const transactions = await Transaction.find(filter).sort({ date: -1 }).lean();
 
     const validCols = columns.filter((c) => ALL_COLUMNS.includes(c));

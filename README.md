@@ -70,22 +70,22 @@ npm run dev         # → http://localhost:3001
 
 ## API Endpoints
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| POST | `/api/auth/login` | ❌ | Login — returns JWT |
-| POST | `/api/auth/logout` | ❌ | Logout |
-| GET  | `/api/auth/me` | ✅ | Current user |
-| GET  | `/api/transactions` | ✅ | List with filters, sort, pagination |
-| GET  | `/api/transactions/summary` | ✅ | KPI aggregates |
-| GET  | `/api/transactions/analytics` | ✅ | Daily grouped data & top customers |
-| POST | `/api/export` | ✅ | Generate & download CSV |
-| GET  | `/api/users` | ✅ | (Admin) List all users |
-| POST | `/api/users` | ✅ | (Admin) Create a new user |
-| PUT  | `/api/users/:id` | ✅ | (Admin) Update user role/name |
-| DELETE|`/api/users/:id` | ✅ | (Admin) Delete a user |
-| PUT  | `/api/auth/profile` | ✅ | Update your own name/email |
-| PUT  | `/api/auth/password` | ✅ | Change your password |
-| GET  | `/api/health` | ❌ | Health check |
+| Method | Endpoint | Auth Required | Description |
+|--------|----------|---------------|-------------|
+| POST | `/api/auth/login` | No | Login — returns JWT |
+| POST | `/api/auth/logout` | No | Logout |
+| GET  | `/api/auth/me` | Yes | Current user |
+| GET  | `/api/transactions` | Yes | List with filters, sort, pagination |
+| GET  | `/api/transactions/summary` | Yes | KPI aggregates |
+| GET  | `/api/transactions/analytics` | Yes | Daily grouped data & top customers |
+| POST | `/api/export` | Yes | Generate & download CSV |
+| GET  | `/api/users` | Yes | (Admin) List all users |
+| POST | `/api/users` | Yes | (Admin) Create a new user |
+| PUT  | `/api/users/:id` | Yes | (Admin) Update user role/name |
+| DELETE|`/api/users/:id` | Yes | (Admin) Delete a user |
+| PUT  | `/api/auth/profile` | Yes | Update your own name/email |
+| PUT  | `/api/auth/password` | Yes | Change your password |
+| GET  | `/api/health` | No | Health check |
 
 ### GET `/api/transactions` query params
 

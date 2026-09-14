@@ -12,8 +12,8 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction):
   const token = auth.slice(7);
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET ?? 'changeme') as JwtPayload;
-    (req as Request & { userId?: string; userRole?: string }).userId = payload.sub;
-    (req as Request & { userId?: string; userRole?: string }).userRole = payload.role;
+    req.userId   = payload.sub;   // typed via global Express augmentation
+    req.userRole = payload.role;
     next();
   } catch (err) {
     console.error('JWT Verification Error:', err);
@@ -23,7 +23,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction):
 
 /** Only admin role can access the wrapped route */
 export const requireAdmin = (req: Request, res: Response, next: NextFunction): void => {
-  if ((req as Request & { userRole?: string }).userRole !== 'admin') {
+  if (req.userRole !== 'admin') {
     res.status(403).json({ success: false, message: 'Forbidden: admin only' });
     return;
   }
