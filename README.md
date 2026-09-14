@@ -77,7 +77,14 @@ npm run dev         # → http://localhost:3001
 | GET  | `/api/auth/me` | ✅ | Current user |
 | GET  | `/api/transactions` | ✅ | List with filters, sort, pagination |
 | GET  | `/api/transactions/summary` | ✅ | KPI aggregates |
+| GET  | `/api/transactions/analytics` | ✅ | Daily grouped data & top customers |
 | POST | `/api/export` | ✅ | Generate & download CSV |
+| GET  | `/api/users` | ✅ | (Admin) List all users |
+| POST | `/api/users` | ✅ | (Admin) Create a new user |
+| PUT  | `/api/users/:id` | ✅ | (Admin) Update user role/name |
+| DELETE|`/api/users/:id` | ✅ | (Admin) Delete a user |
+| PUT  | `/api/auth/profile` | ✅ | Update your own name/email |
+| PUT  | `/api/auth/password` | ✅ | Change your password |
 | GET  | `/api/health` | ❌ | Health check |
 
 ### GET `/api/transactions` query params
