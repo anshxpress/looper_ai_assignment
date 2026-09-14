@@ -41,7 +41,7 @@ const Login: React.FC = () => {
         {/* Logo */}
         <div className={styles.logoRow}>
           <div className={styles.logoMark}><Zap size={16} /></div>
-          <span className={styles.wordmark}>Looper</span>
+          <span className={styles.wordmark}>Loopr</span>
         </div>
 
         <h1 className={styles.heading}>Welcome back</h1>
@@ -55,7 +55,7 @@ const Login: React.FC = () => {
               <Mail size={15} className={styles.inputIcon} />
               <input
                 type="email"
-                placeholder="admin@looper.com"
+                placeholder="admin@loopr.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={styles.input}
@@ -93,8 +93,8 @@ const Login: React.FC = () => {
         {/* Dev hint */}
         <div className={styles.hint}>
           <strong>Dev credentials:</strong><br />
-          admin@looper.com / admin123<br />
-          viewer@looper.com / viewer123
+          admin@loopr.com / admin123<br />
+          viewer@loopr.com / viewer123
         </div>
       </div>
     </div>

@@ -18,7 +18,7 @@ async function seed() {
   console.log('✅ Connected to MongoDB');
 
   // ── Seed transactions ──────────────────────────────────────────────────────
-  const jsonPath = path.resolve(__dirname, '../../../transactions (1).json');
+  const jsonPath = path.join(__dirname, 'transactions.json');
   const raw = JSON.parse(fs.readFileSync(jsonPath, 'utf-8')) as unknown[];
   await Transaction.deleteMany({});
   await Transaction.insertMany(raw);
@@ -28,13 +28,13 @@ async function seed() {
   await User.deleteMany({});
   await User.insertMany([
     {
-      email: 'admin@looper.com',
+      email: 'admin@loopr.com',
       passwordHash: await bcrypt.hash('admin123', 10),
       name: 'John Doe',
       role: 'admin',
     },
     {
-      email: 'viewer@looper.com',
+      email: 'viewer@loopr.com',
       passwordHash: await bcrypt.hash('viewer123', 10),
       name: 'Jane Smith',
       role: 'viewer',

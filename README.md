@@ -1,4 +1,4 @@
-# Looper Admin Dashboard
+# Loopr Admin Dashboard
 
 A full-stack financial admin dashboard — React + TypeScript frontend, Node.js + Express + MongoDB backend.
 
@@ -44,8 +44,8 @@ npm run dev         # → http://localhost:5173
 ```
 
 **Dev credentials (mock auth — no backend required):**
-- `admin@looper.com` / `admin123`
-- `viewer@looper.com` / `viewer123`
+- `admin@loopr.com` / `admin123`
+- `viewer@loopr.com` / `viewer123`
 
 ---
 

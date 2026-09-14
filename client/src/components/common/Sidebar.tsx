@@ -1,6 +1,7 @@
 import React from 'react';
-import { LayoutDashboard, BarChart2, Users, Settings, Zap, LogOut } from 'lucide-react';
+import { LayoutDashboard, BarChart2, Users, Settings, Zap, LogOut, Moon, Sun } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../hooks/useTheme';
 import styles from './Sidebar.module.css';
 
 interface SidebarProps {
@@ -22,6 +23,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onPageChange }) =>
     ? user.name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2)
     : 'AD';
 
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <aside className={styles.sidebar}>
       {/* Logo */}
@@ -29,7 +32,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onPageChange }) =>
         <div className={styles.logoMark}>
           <Zap size={14} />
         </div>
-        <span className={styles.wordmark}>Looper</span>
+        <span className={styles.wordmark}>Loopr</span>
       </div>
 
       {/* Navigation */}
@@ -46,8 +49,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onPageChange }) =>
         ))}
       </nav>
 
-      {/* User section */}
+      {/* User section & Theme Toggle */}
       <div className={styles.userSection}>
+        <button className={styles.navItem} onClick={toggleTheme} style={{ padding: '8px', marginBottom: '16px' }}>
+          {theme === 'dark' ? <Sun className={styles.navIcon} /> : <Moon className={styles.navIcon} />}
+          <span className={styles.navLabel}>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+        </button>
+
         <div className={styles.userInfo}>
           <div className={styles.userAvatar}>{initials}</div>
           <div>

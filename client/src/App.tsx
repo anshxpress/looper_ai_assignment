@@ -4,8 +4,11 @@ import { AlertProvider } from './context/AlertContext';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import { useTheme } from './hooks/useTheme';
 
 function App() {
+  useTheme(); // Initialize theme globally
+
   return (
     <BrowserRouter>
       <AlertProvider>
