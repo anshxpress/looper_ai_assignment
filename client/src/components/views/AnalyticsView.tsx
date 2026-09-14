@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
 } from 'recharts';
+import { Maximize2, X } from 'lucide-react';
 import { transactionsApi } from '../../api/transactions';
 import styles from '../charts/Chart.module.css';
 
@@ -17,6 +18,7 @@ interface AnalyticsData {
 export const AnalyticsView: React.FC = () => {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [expandedUserChart, setExpandedUserChart] = useState<{ userId: string; data: { date: string; revenue: number; expenses: number }[] } | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -42,7 +44,7 @@ export const AnalyticsView: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-16)' }}>
       {/* Top row */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 'var(--space-16)' }}>
+      <div className="analytics-top-grid">
         
         {/* Main Global Chart */}
         <div className={styles.wrap} style={{ minHeight: 320 }}>
@@ -88,10 +90,19 @@ export const AnalyticsView: React.FC = () => {
       </div>
 
       {/* 2x2 Grid for User Charts */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-16)' }}>
+      <div className="analytics-user-grid">
         {data.userCharts?.map(userChart => (
-          <div key={userChart.userId} className={styles.wrap} style={{ minHeight: 260 }}>
-            <h3 className={styles.title}>{userChart.userId} - Activity</h3>
+          <div key={userChart.userId} className={styles.wrap} style={{ minHeight: 260, display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h3 className={styles.title}>{userChart.userId} - Activity</h3>
+              <button 
+                onClick={() => setExpandedUserChart(userChart)}
+                style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: 4 }}
+                title="Expand Chart"
+              >
+                <Maximize2 size={16} />
+              </button>
+            </div>
             <div className={styles.chartArea}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={userChart.data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
@@ -110,6 +121,52 @@ export const AnalyticsView: React.FC = () => {
           </div>
         ))}
       </div>
+
+      {/* Expanded Chart Modal */}
+      {expandedUserChart && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1000,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          padding: 'var(--space-24)'
+        }}>
+          <div style={{
+            background: 'var(--bg-surface)', width: '100%', maxWidth: 900,
+            borderRadius: 'var(--radius-lg)', padding: 'var(--space-24)',
+            display: 'flex', flexDirection: 'column', gap: 'var(--space-16)',
+            boxShadow: 'var(--shadow-md)', position: 'relative'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h2 style={{ fontSize: 18, fontWeight: 600, color: 'var(--text-primary)' }}>
+                {expandedUserChart.userId} - Full Year Activity
+              </h2>
+              <button 
+                onClick={() => setExpandedUserChart(null)}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}
+              >
+                <X size={24} />
+              </button>
+            </div>
+            
+            <div style={{ height: 500, width: '100%' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={expandedUserChart.data} margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border-light)" />
+                  <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fill: 'var(--text-muted)' }} dy={10} />
+                  <YAxis axisLine={false} tickLine={false} tickFormatter={fmt} tick={{ fill: 'var(--text-muted)' }} dx={-4} />
+                  <Tooltip
+                    formatter={(v: unknown) => [fmt(Number(v))]}
+                    contentStyle={{ background: 'var(--bg-surface)', border: '1px solid var(--border-light)', borderRadius: '6px' }}
+                  />
+                  <Legend wrapperStyle={{ paddingTop: 20 }} />
+                  <Bar dataKey="revenue" name="Revenue" fill="#16A34A" radius={[4, 4, 0, 0]} maxBarSize={60} />
+                  <Bar dataKey="expenses" name="Expenses" fill="#DC2626" radius={[4, 4, 0, 0]} maxBarSize={60} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

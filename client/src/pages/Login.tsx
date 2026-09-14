@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Mail, Lock, Eye, EyeOff, Zap } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useAlert } from '../context/AlertContext';
 import { authApi } from '../api/auth';
 import styles from './Login.module.css';
+import logoImg from '../image.png';
 
 const Login: React.FC = () => {
   const { login } = useAuth();
@@ -40,8 +41,7 @@ const Login: React.FC = () => {
       <div className={styles.card}>
         {/* Logo */}
         <div className={styles.logoRow}>
-          <div className={styles.logoMark}><Zap size={16} /></div>
-          <span className={styles.wordmark}>Loopr</span>
+          <img src={logoImg} alt="Logo" className={styles.logoMark} />
         </div>
 
         <h1 className={styles.heading}>Welcome back</h1>

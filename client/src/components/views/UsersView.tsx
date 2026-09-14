@@ -68,7 +68,7 @@ export const UsersView: React.FC = () => {
         </button>
       </div>
 
-      <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
+      <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-light)', borderRadius: 'var(--radius-lg)', overflowX: 'auto', overflowY: 'hidden' }}>
         {isLoading ? (
           <div style={{ padding: 32, textAlign: 'center', color: 'var(--text-muted)' }}>Loading...</div>
         ) : (

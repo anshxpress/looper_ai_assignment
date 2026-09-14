@@ -26,6 +26,7 @@ function App() {
             {/* Catch-all → redirect to dashboard */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
+          <div className="watermark">Assignment Project</div>
         </AuthProvider>
       </AlertProvider>
     </BrowserRouter>

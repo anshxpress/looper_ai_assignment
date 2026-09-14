@@ -7,9 +7,13 @@
   display: flex;
   flex-direction: column;
   padding: var(--space-16) var(--space-12);
-  position: sticky;
+  position: fixed;
   top: 0;
-  flex-shrink: 0;
+  left: 0;
+  bottom: 0;
+  height: 100vh;
+  z-index: 40;
+  overflow-y: auto;
 }
 
 .logoContainer {
@@ -21,14 +25,10 @@
 }
 
 .logoMark {
-  width: 28px;
   height: 28px;
-  background-color: var(--accent-color);
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
+  width: auto;
+  max-width: 40px;
+  object-fit: contain;
   flex-shrink: 0;
 }
 

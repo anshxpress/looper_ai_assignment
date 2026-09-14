@@ -91,9 +91,52 @@ ul { list-style: none; }
 button { background: none; border: none; cursor: pointer; font-family: inherit; color: inherit; }
 input, select { font-family: inherit; }
 
+/* Helper for centering */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Watermark */
+.watermark {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 9999;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  user-select: none;
+}
+
 /* Responsive chart/activity row */
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--space-16);
+}
+.analytics-top-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-16);
+}
+.analytics-user-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-16);
+}
+
 @media (max-width: 1024px) {
-  .charts-row { flex-direction: column !important; }
+  .charts-grid,
+  .analytics-top-grid,
+  .analytics-user-grid { 
+    grid-template-columns: 1fr; 
+  }
 }
 
 /* Animations */

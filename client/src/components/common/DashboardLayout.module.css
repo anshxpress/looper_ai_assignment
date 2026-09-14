@@ -2,6 +2,7 @@
   display: flex;
   min-height: 100vh;
   background-color: var(--bg-page);
+  padding-left: 200px; /* Offset for fixed sidebar */
 }
 
 .main {
@@ -22,5 +23,6 @@
 }
 
 @media (max-width: 768px) {
+  .layout { padding-left: 60px; }
   .content { padding: var(--space-16); gap: var(--space-16); }
 }

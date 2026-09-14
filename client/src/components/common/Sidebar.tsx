@@ -1,8 +1,9 @@
 import React from 'react';
-import { LayoutDashboard, BarChart2, Users, Settings, Zap, LogOut, Moon, Sun } from 'lucide-react';
+import { LayoutDashboard, BarChart2, Users, Settings, LogOut, Moon, Sun } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../hooks/useTheme';
 import styles from './Sidebar.module.css';
+import logoImg from '../../image.png';
 
 interface SidebarProps {
   activePage: string;
@@ -29,10 +30,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activePage, onPageChange }) =>
     <aside className={styles.sidebar}>
       {/* Logo */}
       <div className={styles.logoContainer}>
-        <div className={styles.logoMark}>
-          <Zap size={14} />
-        </div>
-        <span className={styles.wordmark}>Loopr</span>
+        <img src={logoImg} alt="Logo" className={styles.logoMark} />
       </div>
 
       {/* Navigation */}

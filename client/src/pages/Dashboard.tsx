@@ -42,7 +42,7 @@ const Dashboard = () => {
 
             {/* Charts row */}
             {summary && (
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: 'var(--space-16)' }}>
+              <div className="charts-grid">
                 <RevenueChart data={summary.chartData} />
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-16)' }}>
                   <CategoryChart data={summary.categoryData} />
