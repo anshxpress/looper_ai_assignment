@@ -1,0 +1,89 @@
+.container {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-16);
+  box-shadow: var(--shadow-sm);
+  width: 100%;
+  overflow-x: auto;
+}
+
+.title {
+  font-size: var(--text-large);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-16);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.th {
+  font-size: var(--text-small);
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  padding: var(--space-12) var(--space-8);
+  border-bottom: 1px solid var(--border-medium);
+}
+
+.td {
+  padding: var(--space-12) var(--space-8);
+  border-bottom: 1px solid var(--border-light);
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.tr {
+  transition: background-color 0.2s ease;
+}
+
+.tr:hover {
+  background-color: var(--bg-surface-hover);
+}
+
+.tr:last-child .td {
+  border-bottom: none;
+}
+
+.customerCell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.customerAvatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--bg-page);
+  object-fit: cover;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: var(--text-small);
+  font-weight: 500;
+}
+
+.badgeSuccess {
+  background-color: var(--status-green-bg);
+  color: var(--status-green-text);
+}
+
+.badgePending {
+  background-color: var(--status-amber-bg);
+  color: var(--status-amber-text);
+}
+
+.badgeFailed {
+  background-color: var(--status-red-bg);
+  color: var(--status-red-text);
+}
