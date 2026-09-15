@@ -86,6 +86,9 @@ npm run dev         # → http://localhost:3001
 | PUT  | `/api/auth/profile` | Yes | Update your own name/email |
 | PUT  | `/api/auth/password` | Yes | Change your password |
 | GET  | `/api/health` | No | Health check |
+| GET  | `/*` | No | (Production Only) Serves the compiled React frontend |
+
+> **Note on Security:** All `/api/*` endpoints are protected by a global rate limiter (max 200 requests per 15 minutes per IP) and `helmet` for secure HTTP headers. Query parameters are strictly validated and sanitized using Zod schemas to prevent NoSQL injection.
 
 ### GET `/api/transactions` query params
 
@@ -110,6 +113,35 @@ npm run dev         # → http://localhost:3001
 {
   "columns": ["id", "date", "user_id", "category", "status", "amount"],
   "filters": { "category": "Revenue", "status": "Paid" }
+}
+```
+
+### POST `/api/auth/login` body
+
+```json
+{
+  "email": "admin@loopr.com",
+  "password": "adminpassword"
+}
+```
+
+### PUT `/api/auth/password` body
+
+```json
+{
+  "currentPassword": "oldpassword",
+  "newPassword": "newpassword123"
+}
+```
+
+### POST `/api/users` body (Admin only)
+
+```json
+{
+  "email": "newuser@loopr.com",
+  "name": "New User",
+  "role": "viewer",
+  "password": "optionalpassword"
 }
 ```
 
