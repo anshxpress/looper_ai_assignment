@@ -1,16 +1,37 @@
 import type { Request, Response, NextFunction } from 'express';
 import { Transaction } from '../models/Transaction';
 import { buildTransactionFilter } from '../utils/filterBuilder';
+import { z } from 'zod';
+
+const getTransactionsSchema = z.object({
+  search: z.string().optional(),
+  category: z.string().optional(),
+  status: z.string().optional(),
+  user: z.string().optional(),
+  dateFrom: z.string().optional(),
+  dateTo: z.string().optional(),
+  amountMin: z.string().optional(),
+  amountMax: z.string().optional(),
+  sortField: z.enum(['id', 'user_id', 'category', 'status', 'amount', 'date']).optional(),
+  sortDir: z.enum(['asc', 'desc']).optional(),
+  page: z.string().optional(),
+  pageSize: z.string().optional(),
+});
 
 export const getAll = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
+    const parsed = getTransactionsSchema.safeParse(req.query);
+    if (!parsed.success) {
+      res.status(400).json({ success: false, message: 'Invalid query parameters' });
+      return;
+    }
     const {
       search = '', category = '', status = '', user = '',
       dateFrom = '', dateTo = '',
       amountMin = '', amountMax = '',
       sortField = 'date', sortDir = 'desc',
       page = '1', pageSize = '10',
-    } = req.query as Record<string, string>;
+    } = parsed.data;
 
     const filter = buildTransactionFilter({ search, category, status, user, dateFrom, dateTo, amountMin, amountMax });
 
