@@ -116,35 +116,6 @@ npm run dev         # → http://localhost:3001
 }
 ```
 
-### POST `/api/auth/login` body
-
-```json
-{
-  "email": "admin@loopr.com",
-  "password": "adminpassword"
-}
-```
-
-### PUT `/api/auth/password` body
-
-```json
-{
-  "currentPassword": "oldpassword",
-  "newPassword": "newpassword123"
-}
-```
-
-### POST `/api/users` body (Admin only)
-
-```json
-{
-  "email": "newuser@loopr.com",
-  "name": "New User",
-  "role": "viewer",
-  "password": "optionalpassword"
-}
-```
-
 ---
 
 ## Features
