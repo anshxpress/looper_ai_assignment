@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { DollarSign, Users, UserPlus, TrendingUp } from 'lucide-react';
-import { parseISO, getMonth } from 'date-fns';
+import { parseISO, getMonth, getYear } from 'date-fns';
 import type { KpiData, TransactionFilters } from '../types';
 import { transactionsApi } from '../api/transactions';
 
@@ -11,6 +11,7 @@ export function useDashboardSummary(filters: TransactionFilters) {
   const [data, setData] = useState<{
     kpis: KpiData[];
     chartData: any[];
+    chartYear: string;
     categoryData: any[];
     activities: any[];
   } | null>(null);
@@ -84,11 +85,25 @@ export function useDashboardSummary(filters: TransactionFilters) {
         const monthlyRevenue = new Array<number>(12).fill(0);
         const monthlyExpenses = new Array<number>(12).fill(0);
 
+        // Collect all years to determine which year(s) the chart covers
+        const yearCounts: Record<number, number> = {};
         transactions.forEach((t) => {
-          const m = getMonth(parseISO(String(t.date)));
+          const parsed = parseISO(String(t.date));
+          const m = getMonth(parsed);
+          const y = getYear(parsed);
+          yearCounts[y] = (yearCounts[y] ?? 0) + 1;
           if (t.category === 'Revenue') monthlyRevenue[m] += t.amount;
           else monthlyExpenses[m] += t.amount;
         });
+
+        // Find the most common year; if multiple years show a range
+        const sortedYears = Object.keys(yearCounts)
+          .map(Number)
+          .sort((a, b) => a - b);
+        const chartYear =
+          sortedYears.length === 1
+            ? String(sortedYears[0])
+            : `${sortedYears[0]}–${sortedYears[sortedYears.length - 1]}`;
 
         const chartData = MONTH_NAMES.map((month, i) => ({
           month,
@@ -114,7 +129,7 @@ export function useDashboardSummary(filters: TransactionFilters) {
             timestamp: relativeLabels[i] ?? '2d ago',
           }));
 
-        setData({ kpis, chartData, categoryData, activities });
+        setData({ kpis, chartData, chartYear, categoryData, activities });
       } catch (err) {
         console.error('Failed to load summary', err);
       }

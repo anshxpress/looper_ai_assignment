@@ -9,9 +9,25 @@ interface ChartPoint { month: string; revenue: number; expenses: number; }
 const fmt = (v: number) =>
   new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', notation: 'compact' }).format(v);
 
-export const RevenueChart: React.FC<{ data: ChartPoint[] }> = ({ data }) => (
+export const RevenueChart: React.FC<{ data: ChartPoint[]; year?: string }> = ({ data, year }) => (
   <div className={styles.wrap} style={{ height: '100%' }}>
-    <h3 className={styles.title}>Revenue vs Expenses</h3>
+    <h3 className={styles.title}>
+      Revenue vs Expenses
+      {year && (
+        <span style={{
+          marginLeft: 10,
+          fontSize: '0.75em',
+          fontWeight: 500,
+          color: 'var(--text-muted)',
+          background: 'var(--bg-muted, rgba(0,0,0,0.06))',
+          borderRadius: 4,
+          padding: '2px 8px',
+          verticalAlign: 'middle',
+        }}>
+          {year}
+        </span>
+      )}
+    </h3>
     <div className={styles.chartArea}>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>

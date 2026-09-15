@@ -43,7 +43,7 @@ const Dashboard = () => {
             {/* Charts row */}
             {summary && (
               <div className="charts-grid">
-                <RevenueChart data={summary.chartData} />
+                <RevenueChart data={summary.chartData} year={summary.chartYear} />
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-16)' }}>
                   <CategoryChart data={summary.categoryData} />
                   <ActivityFeed items={summary.activities} />
