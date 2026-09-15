@@ -27,7 +27,6 @@ export const ActivityFeed: React.FC<{ items: ActivityItem[] }> = ({ items }) => 
             <div className={styles.iconWrap}><Icon size={14} /></div>
             <div className={styles.body}>
               <span className={styles.desc}>{item.description}</span>
-              <span className={styles.time}>{item.timestamp}</span>
             </div>
           </div>
         );

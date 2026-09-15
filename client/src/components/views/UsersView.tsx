@@ -84,7 +84,18 @@ export const UsersView: React.FC = () => {
             <tbody>
               {users.map((u) => (
                 <tr key={u.id} style={{ borderBottom: '1px solid var(--border-light)' }}>
-                  <td style={{ padding: '12px 16px', fontSize: 14, fontWeight: 500, color: 'var(--text-primary)' }}>{u.name}</td>
+                  <td style={{ padding: '12px 16px', fontSize: 14, fontWeight: 500, color: 'var(--text-primary)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                      <div style={{
+                        width: 32, height: 32, borderRadius: '50%', backgroundColor: 'var(--accent-color)', 
+                        color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', 
+                        fontSize: 12, fontWeight: 700, flexShrink: 0
+                      }}>
+                        {u.name ? u.name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2) : 'U'}
+                      </div>
+                      {u.name}
+                    </div>
+                  </td>
                   <td style={{ padding: '12px 16px', fontSize: 14, color: 'var(--text-secondary)' }}>{u.email}</td>
                   <td style={{ padding: '12px 16px' }}>
                     <span style={{ 
